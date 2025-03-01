@@ -1,10 +1,11 @@
 import database from "infra/database.js"
+import orchaestrator from "tests/orchestrator"
 
-beforeAll(cleanDatabase)
 
-async function cleanDatabase() {
+beforeAll(async () => {
+  await orchaestrator.waitForAllServices()
   await database.query("DROP SCHEMA public CASCADE; CREATE SCHEMA public;")
-}
+})
 
 
 test("POST to /api/v1/migrations should return 200", async () => {
