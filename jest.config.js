@@ -1,5 +1,5 @@
-const nextJest = require('next/jest')
-const dotenv = require('dotenv')
+const nextJest = require("next/jest");
+const dotenv = require("dotenv");
 
 // Uma forma de carregar as variaveis de ambiente test segundo a documentação do next
 // const { loadEnvConfig } = require('@next/env')
@@ -7,15 +7,15 @@ const dotenv = require('dotenv')
 //
 
 dotenv.config({
-  path: '.env.development'
-})
+  path: ".env.development",
+});
 
 const createJestConfig = nextJest({
-  dir: '.',
-})
+  dir: ".",
+});
 const jestConfig = createJestConfig({
-  moduleDirectories: ['node_modules', '<rootDir>'],
+  moduleDirectories: ["node_modules", "<rootDir>"],
   testTimeout: 60000,
-})
+});
 
-module.exports = jestConfig
+module.exports = jestConfig;
