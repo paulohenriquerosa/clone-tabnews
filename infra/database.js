@@ -45,8 +45,10 @@ function databaseEnvironment() {
   };
 }
 
-export default {
+const database = {
   query,
   getNewClient,
   databaseEnvironment,
 };
+
+export default database;
