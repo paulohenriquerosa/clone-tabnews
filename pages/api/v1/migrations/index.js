@@ -23,34 +23,38 @@ const defaultMigrationOptions = {
 async function getHandler(request, response) {
   let dbClient;
 
-  dbClient = await database.getNewClient();
+  try {
+    dbClient = await database.getNewClient();
 
-  const pendingmigrations = await migrationsRunner({
-    ...defaultMigrationOptions,
-    dbClient,
-  });
+    const pendingmigrations = await migrationsRunner({
+      ...defaultMigrationOptions,
+      dbClient,
+    });
 
-  await dbClient.end();
-
-  return response.status(200).json(pendingmigrations);
+    return response.status(200).json(pendingmigrations);
+  } finally {
+    await dbClient?.end();
+  }
 }
 
 async function postHandler(request, response) {
   let dbClient;
 
-  dbClient = await database.getNewClient();
+  try {
+    dbClient = await database.getNewClient();
 
-  const migratedMigrations = await migrationsRunner({
-    ...defaultMigrationOptions,
-    dbClient,
-    dryRun: false,
-  });
+    const migratedMigrations = await migrationsRunner({
+      ...defaultMigrationOptions,
+      dbClient,
+      dryRun: false,
+    });
 
-  if (migratedMigrations.length > 0) {
-    return response.status(201).json(migratedMigrations);
+    if (migratedMigrations.length > 0) {
+      return response.status(201).json(migratedMigrations);
+    }
+
+    return response.status(200).json(migratedMigrations);
+  } finally {
+    await dbClient.end();
   }
-
-  await dbClient.end();
-
-  return response.status(200).json(migratedMigrations);
 }
