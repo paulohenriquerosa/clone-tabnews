@@ -3,12 +3,12 @@ import { createRouter } from "next-connect";
 import { resolve } from "node:path";
 
 import database from "infra/database";
-import controller from "infra/controller.js"
+import controller from "infra/controller.js";
 
-const router = createRouter()
+const router = createRouter();
 
-router.get(getHandler)
-router.post(postHandler)
+router.get(getHandler);
+router.post(postHandler);
 
 export default router.handler(controller.errorHandlers);
 
@@ -21,24 +21,21 @@ const defaultMigrationOptions = {
 };
 
 async function getHandler(request, response) {
-
   let dbClient;
 
   dbClient = await database.getNewClient();
 
   const pendingmigrations = await migrationsRunner({
     ...defaultMigrationOptions,
-    dbClient
+    dbClient,
   });
 
   await dbClient.end();
 
   return response.status(200).json(pendingmigrations);
-
 }
 
 async function postHandler(request, response) {
-
   let dbClient;
 
   dbClient = await database.getNewClient();
@@ -53,10 +50,7 @@ async function postHandler(request, response) {
     return response.status(201).json(migratedMigrations);
   }
 
-
   await dbClient.end();
 
   return response.status(200).json(migratedMigrations);
-
 }
-
