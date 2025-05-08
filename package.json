@@ -46,6 +46,7 @@
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.25.0",
     "@eslint/migrate-config": "^1.4.1",
+    "@faker-js/faker": "9.7.0",
     "@secretlint/secretlint-rule-preset-recommend": "9.2.0",
     "@stylistic/eslint-plugin": "^1",
     "commitizen": "4.3.1",
